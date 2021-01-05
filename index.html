@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Chat App</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {background-color: rgba(1, 37, 66, 0.795);}
+      .curvedBorder {border-radius: 10px;}
+
+      body { font: 13px Helvetica, Arial; }
+      form { background: rgba(0, 0, 0, 0.562); padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; background-color: rgb(241, 241, 241); }
+      form button { width: 9%; background: rgba(0, 177, 124, 0.699); border: none; padding: 10px; border-radius: 20px; font-size: 20px; color: rgb(255, 255, 255); }
+      #chat { list-style-type: none; margin: 0; padding: 0; }
+      #chat li { padding: 5px 10px; color: rgba(255, 255, 255, 0.795); }
+      #chat sys {background-color: rgba(40, 199, 0, 0.795);}
+    </style>
+  </head>
+  <body>
+    <ul id="chat"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" class = "curvedBorder" /><button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        $('form').submit(function(e) {
+          e.preventDefault(); // prevents page reloading
+          socket.emit('chat message', $('#m').val());
+          $('#m').val('');
+          return false;
+        });
+        socket.on('chat message', function(m){
+      $('#chat').append($('<li>').text(m));
+    });
+        socket.on('system message', function(m){
+      $('#chat').append($('<sys>').text(m));
+    });
+  });
+    </script>
+
+  </body>
+</html>

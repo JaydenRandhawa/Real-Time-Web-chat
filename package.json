@@ -1,0 +1,16 @@
+{
+  "name": "socket.io-chat",
+  "version": "1.0.0",
+  "description": "basic chat application using socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jayden Randhawa",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6",
+    "socket.io": "^3.0.4"
+  }
+}
