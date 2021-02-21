@@ -1,25 +1,30 @@
 <!doctype html>
 <html>
   <head>
-    <title>Chat App</title>
+
+    <script src="index.js"></script>
+
+    <title>Epitome of Sketchiness</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body {background-color: rgba(1, 37, 66, 0.795);}
+      body {background-color: rgb(63, 62, 62);}
       .curvedBorder {border-radius: 10px;}
 
       body { font: 13px Helvetica, Arial; }
-      form { background: rgba(0, 0, 0, 0.562); padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; background-color: rgb(241, 241, 241); }
-      form button { width: 9%; background: rgba(0, 177, 124, 0.699); border: none; padding: 10px; border-radius: 20px; font-size: 20px; color: rgb(255, 255, 255); }
+      form { background: rgba(0, 0, 0, 0.562); padding: 3px; position: fixed; bottom: 0; width: 100%; outline: none;}
+      form input { border: 0; padding: 10px; width: 90%; margin-right: 0.5%; background-color: rgb(182, 182, 182); }
+      form button { width: 9%; background: rgba(48, 224, 171, 0.699); border: none; padding: 10px; border-radius: 20px; font-size: 20px; color: rgb(255, 255, 255); transition: 0.7s; }
+      form button:hover{background: rgba(110, 255, 214, 0.699); color: rgb(63, 62, 62);transition: 0.7s;}
       #chat { list-style-type: none; margin: 0; padding: 0; }
       #chat li { padding: 5px 10px; color: rgba(255, 255, 255, 0.795); }
-      #chat sys {background-color: rgba(40, 199, 0, 0.795);}
+      #chat sys {background-color: rgba(255, 255, 255, 0.795);}
     </style>
   </head>
   <body>
     <ul id="chat"></ul>
+
     <form action="">
-      <input id="m" autocomplete="off" class = "curvedBorder" /><button>Send</button>
+      <input id="m" autocomplete="off" class = "curvedBorder" autofocus="true"/><button>Send</button>
     </form>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -32,12 +37,15 @@
           socket.emit('chat message', $('#m').val());
           $('#m').val('');
           return false;
-        });
+        });  
         socket.on('chat message', function(m){
       $('#chat').append($('<li>').text(m));
     });
         socket.on('system message', function(m){
       $('#chat').append($('<sys>').text(m));
+    });
+    socket.on('newline', function(_){
+      $('#chat').append($('<sys>').text("\n"));
     });
   });
     </script>
